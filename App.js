@@ -1,20 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// In App.js in a new project
 
-export default function App() {
+import React, { useContext } from "react";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import GetStarted from "./src/components/GetStarted";
+import Signup from "./src/components/authentication/Signup";
+import Login from "./src/components/authentication/Login";
+import { Context, Provider } from "./src/context/globalContext.js";
+import Home from "./src/components/Home";
+import MainContainer from "./src/components/navigation/MainContainer";
+import ForgotPassword from "./src/components/authentication/ForgotPassword";
+import Verification from "./src/components/authentication/Verification";
+import NewPassword from "./src/components/authentication/NewPassword";
+import AddKidProfile from "./src/components/userFunctions/AddKidProfile";
+
+const Stack = createNativeStackNavigator();
+
+function App(props) {
+  const globalContext = useContext(Context);
+  const isLoggedIn = globalContext;
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            contentStyle: {
+              backgroundColor: "#FFFFFF",
+            },
+          }}
+        >
+          <Stack.Screen name="GetStarted" component={GetStarted} />
+          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="AddKidProfile" component={AddKidProfile} />
+          <Stack.Screen name="MainContainer" component={MainContainer} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="Verification" component={Verification} />
+          <Stack.Screen name="NewPassword" component={NewPassword} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
