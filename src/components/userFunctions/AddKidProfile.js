@@ -55,12 +55,13 @@ const AddKidProfile = (props) => {
   }
   return (
     <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => props.navigation.navigate("Home")}>
         <AntIcons
           name={"left"}
           size={30}
           color={darkBlue}
           style={{ top: 70, left: 20 }}
+          
         />
       </TouchableOpacity>
 
@@ -84,9 +85,9 @@ const AddKidProfile = (props) => {
         ></TextInput>
       </View>
 
-      <TouchableOpacity style={styles.addPhotoButton}>
+      <TouchableOpacity style={styles.addPhotoButton} onPress={() => props.navigation.navigate("KidProfilePhotos")}>
         <EntypoIcons name={"plus"} size={30} color={darkBlue} />
-        <Text style={styles.addPhotoText}>ADD PHOTO</Text>
+        <Text style={styles.addPhotoText}>ADD PHOTOS</Text>
       </TouchableOpacity>
 
       <View style={styles.birthField}>

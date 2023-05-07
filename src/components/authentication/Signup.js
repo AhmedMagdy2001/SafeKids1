@@ -27,31 +27,50 @@ const cityChoice =[
   { label: "Portsaid", value: "portsaid" },
 ];
 const Signup = (props) => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [contactnumber, setContactnumber] = useState("");
-  const [gender, setGender] = useState(null);
+  const [birthDate, setBirthDate] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [gender, setGender] = useState("male");
+  const [city, setCity] = useState("cairo");
+  const [error, setError] = useState("")
   const handleRequest = async () => {
-    var data = await post(apiRoutes.register, {
-      email: username,
-      password: password,
-      first_name: firstname,
-      last_name: lastname,
-    });
+    setError("")
 
-    console.log(data);
+    let body = JSON.stringify({
+      'name': name,
+      'email': email,
+      'password': password,
+      'birthDate': birthDate,
+      'mobileNumber': mobileNumber,
+      'gender':gender,
+      'city':city
+    })
 
-    if (data.success) {
-      console.log("signed up");
-    } else {
-      var errors = "";
-      data.errors.map((error) => {
-        errors = errors + error + "\n";
-      });
-      alert(errors);
-    }
+    fetch(apiRoutes.register, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body:body
+      })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          setError("User already exists")
+          throw res.json()
+        }
+      })
+      .then(json => {
+       /* setUserObj(json)
+        setToken(json.token)
+        setIsLoggedIn(true)*/
+      })
+      .catch(error => {
+        console.log(error)
+      })
   };
 
   return (
@@ -121,7 +140,7 @@ const Signup = (props) => {
             style={styles.field}
             placeholderTextColor={grey}
             placeholder="John Doe"
-            onChangeText={(text) => setFirstname(text)}
+            onChangeText={(text) => setName(text)}
           ></TextInput>
 
           <Text
@@ -140,7 +159,7 @@ const Signup = (props) => {
             style={styles.field}
             placeholderTextColor={grey}
             placeholder="example@website.com"
-            onChangeText={(text) => setUsername(text)}
+            onChangeText={(text) => setEmail(text)}
             keyboardType={"email-address"}
           ></TextInput>
           <Text
@@ -178,6 +197,7 @@ const Signup = (props) => {
             style={styles.field}
             placeholderTextColor={grey}
             placeholder="DD/MM/YYYY"
+            onChangeText={(text) => setBirthDate(text)}
           ></TextInput>
           <Text
             style={{
@@ -195,7 +215,7 @@ const Signup = (props) => {
             style={styles.field}
             placeholderTextColor={grey}
             placeholder="Contact Number"
-            onChangeText={(text) => setContactnumber(text)}
+            onChangeText={(text) => setMobileNumber(text)}
             keyboardType={"numeric"}
           ></TextInput>
           <Text
@@ -235,14 +255,13 @@ const Signup = (props) => {
            <DropdownComponent
             data={cityChoice}
             onChange={(item) => {
-              setGender(item);
+              setCity(item);
             }}
           ></DropdownComponent>
 
           <TouchableOpacity
             onPress={() => {
               handleRequest();
-              alert("Account created");
               props.navigation.navigate("Login");
             }}
             style={{

@@ -14,6 +14,7 @@ import ForgotPassword from "./src/components/authentication/ForgotPassword";
 import Verification from "./src/components/authentication/Verification";
 import NewPassword from "./src/components/authentication/NewPassword";
 import AddKidProfile from "./src/components/userFunctions/AddKidProfile";
+import KidProfilePhotos from "./src/components/userFunctions/KidProfilePhotos";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ function App(props) {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="AddKidProfile" component={AddKidProfile} />
+          <Stack.Screen name="KidProfilePhotos" component={KidProfilePhotos} />
           <Stack.Screen name="MainContainer" component={MainContainer} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="Verification" component={Verification} />
