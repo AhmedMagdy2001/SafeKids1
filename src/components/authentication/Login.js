@@ -25,39 +25,35 @@ const Login = (props) => {
   function tempLogin(){
     props.navigation.navigate("Home");
   }
-  function handleLogin() {
-    setError("");
-
-    let body = JSON.stringify({
-      email: email,
-      password: password,
-    });
-
-    fetch(`${domain}/api/login-user`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: body,
-    })
-      .then((res) => {
-        if (res.ok) {
-          props.navigation.navigate("MainContainer");
-          return res.json();
-        } else {
-          setError("Invalid Credentials");
-          throw res.json();
-        }
-      })
-      .then((json) => {
-        setUserName(json.first_name);
-        setToken(json.token);
-        setIsLoggedIn(true);
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(apiRoutes.login, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
       });
-  }
+      console.log(body)
+      if (response.ok) {
+        // Login successful
+        const data = await response.json();
+        // Handle the successful login response, e.g., set user state, store token, etc.
+      } else {
+        console.log(response.json())
+        // Login failed
+        throw new Error('Invalid credentials');
+      }
+    } catch (error) {
+      // Handle the error
+      console.error(error);
+    }
+  };
+  
+  
 
   return (
  

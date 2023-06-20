@@ -13,6 +13,7 @@ import axios from "axios";
 import apiRoutes from "../apiRoutes";
 import { post } from "../apiCalls";
 import DropdownComponent from "../DropdownComponent";
+import DatePicker from 'react-native-datepicker';
 
 const genderChoice = [
   { label: "Female", value: "female" },
@@ -196,7 +197,7 @@ const Signup = (props) => {
           <TextInput
             style={styles.field}
             placeholderTextColor={grey}
-            placeholder="DD/MM/YYYY"
+            placeholder="DD-MM-YYYY"
             onChangeText={(text) => setBirthDate(text)}
           ></TextInput>
           <Text
